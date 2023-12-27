@@ -1,0 +1,46 @@
+﻿@model UserRegister
+@{
+    ViewBag.Title = "ثبت نام";
+    Layout = "~/Views/Shared/_LayoutBase.cshtml";
+}
+
+<h2>ثبت نام در سیستم</h2>
+<hr />
+<div class="row">
+    <div class="col-sm-12">
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName):
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FirstName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LastName):
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.LastName)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Username):
+                @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Username)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password):
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Password)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ConfirmPassword):
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.ConfirmPassword)
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">ثبت نام</button>
+                <a href="@Url.Action("Login","Account")" class="btn btn-link">ورود</a>
+            </div>
+        }
+    </div>
+</div>
+
+

@@ -1,0 +1,64 @@
+﻿@model List<tbl_User>
+
+@{
+    ViewBag.Title = "کاربران";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>
+    کاربران @*<a class="btn btn-link" href="@Url.Action("AddPoi")">Add new POI</a>*@
+    @*@using (Html.BeginForm("AddRandomPois", "Tourism", FormMethod.Post, new { style = "display: inline-block;" }))
+        {
+            <button type="submit" class="btn btn-link">Add 10 random Pois</button>
+        }*@
+</h2>
+<hr />
+<div class="row">
+    <div class="col-sm-12">
+        @if (Model == null)
+        {
+            <p>No Data Available</p>
+        }
+        else
+        {
+            if (Model.Count == 0)
+            {
+                <p>No Data Available</p>
+            }
+            else
+            {
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>نام</th>
+                            <th>نام خانوادگی</th>
+                            <th>نام کاربری</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{int i = 0;}
+                        @foreach (var item in Model)
+                        {
+                            i++;
+                            <tr>
+                                <td>@i.ToString()</td>
+                                <td>@item.FirstName</td>
+                                <td>@item.LastName</td>
+                                <td>@item.Username</td>
+                                @*<td>
+                                    <a class="btn btn-link pull-left" href="@Url.Action("EditPoi",new { id = item.Id })">Change</a>
+                                    @using (Html.BeginForm("DeletePoi", "Tourism", new { id = item.Id }, FormMethod.Post, new { @class = "pull-left" }))
+                                    {
+                                        <button type="submit" class="btn btn-link" onclick="return confirm('Are you sure you wish to delete this item?');">Delete</button>
+                                    }
+                                </td>*@
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        }
+    </div>
+</div>
+

@@ -1,0 +1,208 @@
+﻿@model HomePageViewModel
+@{
+    ViewBag.Title = "صفحه اصلي";
+}
+<div class="clearfix" style="padding-top: 20px;"></div>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">تنظيمات</div>
+            <div class="panel-body">
+                @using (Html.BeginForm("UpdatePreferences", "Home", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <label class="col-sm-4">شرايط زمينه اي:</label>
+                        <div class="col-sm-4">
+                            @Html.DropDownListFor(m => m.ContextFactorId, new SelectList(@Model.ContextFactors, "Id", "Name", Model.ContextFactorId), "--- تعيين نشده ---", new { @class = "form-control" })
+
+                        </div>
+                        <div class="col-sm-4">
+                            <a href="#" class="btn btn-primary" onclick="changeContext()">تغيير زمينه</a>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <hr />
+                    <p>تعيين كنيد هر كدام از موارد زير چقدر براي شما مهم است:</p>
+                    <div class="form-group">
+                        <label class="col-sm-4">استراحت:</label>
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.LeisurePVal, new SelectList(@Model.DomainVals, Model.LeisurePVal), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">ورزش:</label>
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.SportPVal, new SelectList(@Model.DomainVals, Model.SportPVal), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">طبيعت:</label>
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.NaturePVal, new SelectList(@Model.DomainVals, Model.NaturePVal), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4">فرهنگ:</label>
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(m => m.CulturePVal, new SelectList(@Model.DomainVals, Model.CulturePVal), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <hr />
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-primary">ثبت مقادير علاقه مندي</button>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="panel panel-success">
+            <div class="panel-heading">نقاط علاقه مندي پيشنهادي</div>
+            <div class="panel-body">
+                @if (Model.POIs != null)
+                {
+                    int poiIndex = 0;
+                    foreach (var item in Model.POIs)
+                    {
+                        poiIndex++;
+                        <div>
+                            <h4 class="text-primary"><small class="text-success">#@(poiIndex)</small> @item.Name <small>[@item.Domain.Title]</small></h4>
+                            <p>@item.Description</p>
+                            <hr />
+                            <div class="clearfix"></div>
+                            @using (Html.BeginForm("UserAssign", "Home", FormMethod.Post))
+                            {
+                                @Html.Hidden("domainId", item.DomainId)
+                                @Html.Hidden("contextId")
+
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label class="col-sm-4">مكان:</label>
+                                        <div class="col-sm-8">
+                                            عرض جغرافيايي: @item.Latitude طول جغرافيايي: @item.Longitude
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <label class="col-sm-4">ميزان علاقه مندي:</label>
+                                        <div class="col-sm-4">
+                                            @Html.DropDownList("preferValue", new SelectList(@Model.DomainVals, Model.CulturePVal), new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <button type="submit" class="btn btn-default">ارسال نظر</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <hr />
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">مقادیر ثابت</div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 text-key">کاربر:</div>
+                    <div class="col-sm-6 col-md-7 text-value">@Model.LoginUser.FirstName @Model.LoginUser.LastName [@Model.LoginUser.Username]</div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 text-key">مکان:</div>
+                    <div class="col-sm-6 col-md-7 text-value" id="userLoc">آفلاین!</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 text-key">نزدیکی:</div>
+                    <div class="col-sm-6 col-md-7 text-value" id="userLoc">15</div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 text-key">Alpha:</div>
+                    <div class="col-sm-6 col-md-7 text-value">@Model.Alpha</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 text-key">Beta:</div>
+                    <div class="col-sm-6 col-md-7 text-value">@Model.Beta</div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 text-key">شرایط زمینه ای:</div>
+                    <div class="col-sm-6 col-md-7 text-value">@Model.ContextFactorName</div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">مقادیر دامنه محاسبه شده</div>
+            <div class="panel-body">
+
+                @if (Model.Preferences == null || Model.Preferences.Count == 0)
+                {
+                    <p>فعلا هیچ داده ای موجود نیست</p>
+                }
+                else
+                {
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>دامنه</th>
+                                <th>اطمینان</th>
+                                <th>رضایتمندی</th>
+                                <th>فعالسازی</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{int i = 0;}
+                            @foreach (var item in Model.Preferences.OrderByDescending(t => t.ConfidenceValue * t.PreferenceValue))
+                            {
+                                i++;
+                                <tr>
+                                    <td>@i.ToString()</td>
+                                    <td>@item.Domain.Title <small>[@item.Domain.Name]</small></td>
+                                    <td>@item.ConfidenceValue</td>
+                                    <td>@item.PreferenceValue</td>
+                                    <td>@(item.ConfidenceValue * item.PreferenceValue)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+    <script>
+
+        var x = document.getElementById("userLoc");
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                x.innerHTML = "موقعیت در این مرورگر پشتیبانی نمی شود.";
+            }
+        }
+
+        function showPosition(position) {
+            x.innerHTML = "عرض جغرافیایی: " + position.coords.latitude +
+                "<br>طول جغرافیایی: " + position.coords.longitude;
+        }
+
+        getLocation();
+
+        function changeContext() {
+            window.open("/?contextId=" + $('#ContextFactorId').val(), "_self");
+        }
+
+    </script>
+}

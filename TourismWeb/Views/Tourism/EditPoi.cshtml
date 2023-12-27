@@ -1,0 +1,50 @@
+﻿@model EditPoi
+
+@{
+    ViewBag.Title = "EditPoi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ویرایش نقطه علاقه مندی <a href="@Url.Action("Pois")" class="btn btn-link">بازگشت به لیست نقاط علاقه مندی</a></h2>
+<hr />
+<div class="row">
+    <div class="col-sm-12">
+        @using (Html.BeginForm("EditPoi", "Tourism", FormMethod.Post, new { id = Model.Id }))
+        {
+            @Html.HiddenFor(m => m.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name):
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Name)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.DomainId):
+                @Html.DropDownListFor(m => m.DomainId,
+                                                            new SelectList(@Model.Domains, "Id", "NameTitle", Model.DomainId),
+                                                            "--- انتخاب کنبد ---",
+                                                            new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.DomainId)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description):
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Description)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Latitude):
+                @Html.TextBoxFor(m => m.Latitude, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Latitude)
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Longitude):
+                @Html.TextBoxFor(m => m.Longitude, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Longitude)
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">ذخیره</button>
+                <a href="@Url.Action("EditPoi",new { id=Model.Id})" class="btn btn-default">بارگزاری مجدد</a>
+            </div>
+        }
+    </div>
+</div>

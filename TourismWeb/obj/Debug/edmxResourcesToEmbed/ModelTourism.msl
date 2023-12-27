@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TourismDBModelStoreContainer" CdmEntityContainer="TourismDBEntities">
+    <EntitySetMapping Name="tbl_ContextFactor">
+      <EntityTypeMapping TypeName="TourismDBModel.tbl_ContextFactor">
+        <MappingFragment StoreEntitySet="tbl_ContextFactor">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_ContextFactorRelation">
+      <EntityTypeMapping TypeName="TourismDBModel.tbl_ContextFactorRelation">
+        <MappingFragment StoreEntitySet="tbl_ContextFactorRelation">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="ChildId" ColumnName="ChildId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_TourismDomain">
+      <EntityTypeMapping TypeName="TourismDBModel.tbl_TourismDomain">
+        <MappingFragment StoreEntitySet="tbl_TourismDomain">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_TourismDomainRelation">
+      <EntityTypeMapping TypeName="TourismDBModel.tbl_TourismDomainRelation">
+        <MappingFragment StoreEntitySet="tbl_TourismDomainRelation">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="ChildId" ColumnName="ChildId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_User">
+      <EntityTypeMapping TypeName="TourismDBModel.tbl_User">
+        <MappingFragment StoreEntitySet="tbl_User">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_UserPreferences">
+      <EntityTypeMapping TypeName="TourismDBModel.tbl_UserPreferences">
+        <MappingFragment StoreEntitySet="tbl_UserPreferences">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="DomainId" ColumnName="DomainId" />
+          <ScalarProperty Name="ContextFactorId" ColumnName="ContextFactorId" />
+          <ScalarProperty Name="PreferenceValue" ColumnName="PreferenceValue" />
+          <ScalarProperty Name="ConfidenceValue" ColumnName="ConfidenceValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_POI">
+      <EntityTypeMapping TypeName="TourismDBModel.tbl_POI">
+        <MappingFragment StoreEntitySet="tbl_POI">
+          <ScalarProperty Name="DomainId" ColumnName="DomainId" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

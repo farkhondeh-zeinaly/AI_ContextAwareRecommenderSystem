@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TourismDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tbl_ContextFactor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_ContextFactorRelation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ParentId" Type="int" Nullable="false" />
+    <Property Name="ChildId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_POI">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" />
+    <Property Name="Latitude" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Longitude" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DomainId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_TourismDomain">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_TourismDomainRelation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ParentId" Type="int" Nullable="false" />
+    <Property Name="ChildId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_UserPreferences">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="DomainId" Type="int" Nullable="false" />
+    <Property Name="ContextFactorId" Type="int" />
+    <Property Name="PreferenceValue" Type="float" Nullable="false" />
+    <Property Name="ConfidenceValue" Type="float" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_tbl_ContextFactorRelation_tbl_ContextFactor">
+    <End Role="tbl_ContextFactor" Type="Self.tbl_ContextFactor" Multiplicity="1" />
+    <End Role="tbl_ContextFactorRelation" Type="Self.tbl_ContextFactorRelation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_ContextFactor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tbl_ContextFactorRelation">
+        <PropertyRef Name="ParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_ContextFactorRelation_tbl_ContextFactor1">
+    <End Role="tbl_ContextFactor" Type="Self.tbl_ContextFactor" Multiplicity="1" />
+    <End Role="tbl_ContextFactorRelation" Type="Self.tbl_ContextFactorRelation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_ContextFactor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tbl_ContextFactorRelation">
+        <PropertyRef Name="ChildId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_POI_tbl_TourismDomain">
+    <End Role="tbl_TourismDomain" Type="Self.tbl_TourismDomain" Multiplicity="1" />
+    <End Role="tbl_POI" Type="Self.tbl_POI" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_TourismDomain">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tbl_POI">
+        <PropertyRef Name="DomainId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_TourismDomainRelation_tbl_TourismDomain">
+    <End Role="tbl_TourismDomain" Type="Self.tbl_TourismDomain" Multiplicity="1" />
+    <End Role="tbl_TourismDomainRelation" Type="Self.tbl_TourismDomainRelation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_TourismDomain">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tbl_TourismDomainRelation">
+        <PropertyRef Name="ParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_TourismDomainRelation_tbl_TourismDomain1">
+    <End Role="tbl_TourismDomain" Type="Self.tbl_TourismDomain" Multiplicity="1" />
+    <End Role="tbl_TourismDomainRelation" Type="Self.tbl_TourismDomainRelation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_TourismDomain">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tbl_TourismDomainRelation">
+        <PropertyRef Name="ChildId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_UserPreferences_tbl_ContextFactor">
+    <End Role="tbl_ContextFactor" Type="Self.tbl_ContextFactor" Multiplicity="0..1" />
+    <End Role="tbl_UserPreferences" Type="Self.tbl_UserPreferences" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_ContextFactor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tbl_UserPreferences">
+        <PropertyRef Name="ContextFactorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_UserPreferences_tbl_TourismDomain">
+    <End Role="tbl_TourismDomain" Type="Self.tbl_TourismDomain" Multiplicity="1" />
+    <End Role="tbl_UserPreferences" Type="Self.tbl_UserPreferences" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_TourismDomain">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tbl_UserPreferences">
+        <PropertyRef Name="DomainId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tbl_UserPreferences_tbl_User">
+    <End Role="tbl_User" Type="Self.tbl_User" Multiplicity="1" />
+    <End Role="tbl_UserPreferences" Type="Self.tbl_UserPreferences" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="tbl_UserPreferences">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="TourismDBModelStoreContainer">
+    <EntitySet Name="tbl_ContextFactor" EntityType="Self.tbl_ContextFactor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_ContextFactorRelation" EntityType="Self.tbl_ContextFactorRelation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_POI" EntityType="Self.tbl_POI" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_TourismDomain" EntityType="Self.tbl_TourismDomain" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_TourismDomainRelation" EntityType="Self.tbl_TourismDomainRelation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_User" EntityType="Self.tbl_User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tbl_UserPreferences" EntityType="Self.tbl_UserPreferences" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tbl_ContextFactorRelation_tbl_ContextFactor" Association="Self.FK_tbl_ContextFactorRelation_tbl_ContextFactor">
+      <End Role="tbl_ContextFactor" EntitySet="tbl_ContextFactor" />
+      <End Role="tbl_ContextFactorRelation" EntitySet="tbl_ContextFactorRelation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_ContextFactorRelation_tbl_ContextFactor1" Association="Self.FK_tbl_ContextFactorRelation_tbl_ContextFactor1">
+      <End Role="tbl_ContextFactor" EntitySet="tbl_ContextFactor" />
+      <End Role="tbl_ContextFactorRelation" EntitySet="tbl_ContextFactorRelation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_POI_tbl_TourismDomain" Association="Self.FK_tbl_POI_tbl_TourismDomain">
+      <End Role="tbl_TourismDomain" EntitySet="tbl_TourismDomain" />
+      <End Role="tbl_POI" EntitySet="tbl_POI" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_TourismDomainRelation_tbl_TourismDomain" Association="Self.FK_tbl_TourismDomainRelation_tbl_TourismDomain">
+      <End Role="tbl_TourismDomain" EntitySet="tbl_TourismDomain" />
+      <End Role="tbl_TourismDomainRelation" EntitySet="tbl_TourismDomainRelation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_TourismDomainRelation_tbl_TourismDomain1" Association="Self.FK_tbl_TourismDomainRelation_tbl_TourismDomain1">
+      <End Role="tbl_TourismDomain" EntitySet="tbl_TourismDomain" />
+      <End Role="tbl_TourismDomainRelation" EntitySet="tbl_TourismDomainRelation" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_UserPreferences_tbl_ContextFactor" Association="Self.FK_tbl_UserPreferences_tbl_ContextFactor">
+      <End Role="tbl_ContextFactor" EntitySet="tbl_ContextFactor" />
+      <End Role="tbl_UserPreferences" EntitySet="tbl_UserPreferences" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_UserPreferences_tbl_TourismDomain" Association="Self.FK_tbl_UserPreferences_tbl_TourismDomain">
+      <End Role="tbl_TourismDomain" EntitySet="tbl_TourismDomain" />
+      <End Role="tbl_UserPreferences" EntitySet="tbl_UserPreferences" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tbl_UserPreferences_tbl_User" Association="Self.FK_tbl_UserPreferences_tbl_User">
+      <End Role="tbl_User" EntitySet="tbl_User" />
+      <End Role="tbl_UserPreferences" EntitySet="tbl_UserPreferences" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
